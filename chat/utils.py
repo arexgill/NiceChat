@@ -1,9 +1,11 @@
 # utils.py
 from .models import UserProfile
 
+
 def get_user_id(username):
     use = UserProfile.objects.get(username=username)
     return use.id
+
 
 def get_friends_list(user_id):
     try:

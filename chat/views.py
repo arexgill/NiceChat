@@ -21,11 +21,6 @@ from .models import UserProfile
 
 class IndexView(View):
     def get(self, request):
-        """
-        Return the home page
-        :param request:
-        :return:
-        """
         if not request.user.is_authenticated:
             print("Not Logged In!")
             return render(request, "chat/index.html", {})
@@ -39,12 +34,6 @@ class IndexView(View):
 class FriendsListView(APIView):
 
     def get(self, request, id):
-        """
-        Get the list of friends of the user
-        :param request:
-        :param id: user id
-        :return: list of friends
-        """
         try:
             user = UserProfile.objects.get(id=id)
             ids = list(user.friends_set.all())
@@ -77,11 +66,6 @@ class SearchView(TemplateView):
         return self.render_to_response({'users': users})
 
     def post(self, request):
-        """
-        Search users based on a query
-        :param request:
-        :return:
-        """
         query = request.data.get("search")
         users = [user for user in UserProfile.objects.all() if query in user.name or query in user.username]
 
@@ -106,12 +90,6 @@ class SearchView(TemplateView):
 
 class AddFriendView(View):
     def get(self, request, name):
-        """
-        Add a user to the friend's list
-        :param request:
-        :param name:
-        :return:
-        """
         username = request.user.username
         id = get_user_id(username)
         friend = UserProfile.objects.get(username=name)
@@ -137,16 +115,10 @@ class AddFriendView(View):
 class ChatView(APIView):
 
     def get(self, request, username):
-        """
-        Get the chat between two users.
-        :param request:
-        :param username:
-        :return:
-        """
         friend = UserProfile.objects.get(username=username)
         id = self.get_user_id(request.user.username)
         curr_user = UserProfile.objects.get(id=id)
-        messages = Messages.objects.filter(sender_name=id, receiver_name=friend.id) | Messages.objects.filter(sender_name=friend.id, receiver_name=id)
+        messages = Messages.objects.filter(sender=id, receiver=friend.id) | Messages.objects.filter(sender=friend.id, receiver=id)
         friends = self.get_friends_list(id)
 
         return render(request, "chat/messages.html",
@@ -168,35 +140,11 @@ class ChatView(APIView):
             return []
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
-# class MessageListView(APIView):
-#
-#     @csrf_exempt
-#     def dispatch(self, *args, **kwargs):
-#         return super().dispatch(*args, **kwargs)
-#
-#     def get(self, request, sender=None, receiver=None):
-#         """
-#         Get the list of messages between two users.
-#         :param request:
-#         :param sender:
-#         :param receiver:
-#         :return:
-#         """
-#         messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
-#         serializer = MessageSerializer(messages, many=True, context={'request': request})
-#
-#         for message in messages:
-#             message.seen = True
-#             message.save()
-#
-#         return JsonResponse(serializer.data, safe=False)
-
 @method_decorator(csrf_exempt, name='dispatch')
 class MessageListView(View):
     def get(self, request, sender=None, receiver=None):
         if sender is not None and receiver is not None:
-            messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
+            messages = Messages.objects.filter(sender=sender, receiver=receiver, seen=False)
             serializer = MessageSerializer(messages, many=True, context={"request": request})
             for message in messages:
                 message.seen = True
@@ -212,24 +160,14 @@ class MessageListView(View):
             # Send a response message back to the sender
             response_message = "Your message was received successfully!"
             response_data = {'response_message': response_message}
+            # Use the service to create the original message and automatic response
+            original_message = MessageService.create_message_and_automatic_response(
+                sender=serializer.validated_data['sender'],
+                receiver=serializer.validated_data['receiver'],
+                content=serializer.validated_data['content'],
+            )
             return JsonResponse(response_data, status=201)
 
-        return JsonResponse(serializer.errors, status=400)
-
-
-    def post(self, request, sender=None, receiver=None):
-        """
-        Create a new message.
-        :param request:
-        :param sender:
-        :param receiver:
-        :return:
-        """
-        data = JSONParser().parse(request)
-        serializer = MessageSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
 

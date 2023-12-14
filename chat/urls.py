@@ -18,6 +18,7 @@ from chat.views import (
     ChatView,
     MessageListView,
     IndexView,
+    MessageCreateView,
 )
 
 urlpatterns = [
@@ -28,6 +29,8 @@ urlpatterns = [
     path('chat/<str:username>/', ChatView.as_view(), name='chat'),
     path('api/messages/<str:sender>/<str:receiver>/', MessageListView.as_view(), name='message-detail'),
     path('api/messages', MessageListView.as_view(), name='message-list'),
+    path('api/messages/create/', MessageCreateView.as_view(), name='message-create'),
+
 ]
 
 
