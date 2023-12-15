@@ -18,8 +18,8 @@ class MessageService:
         )
 
         # Log information for debugging
-        logging.info(f"Original message created: {original_message}")
-        logging.info(f"Automatic response created: {automatic_response}")
+        # logging.info(f"Original message created: {original_message}")
+        # logging.info(f"Automatic response created: {automatic_response}")
 
         # You can perform additional actions if needed
 

@@ -37,7 +37,7 @@
 
         const text_box = '<div class="container darker">' +
             '<img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">' +
-            '<p>{description}</p>' +
+            '<p>{content}</p>' +
             '<span class="time-right">{time}</span>' +
             '</div>'
 
@@ -55,7 +55,7 @@
 
             $.post('/api/messages', '{"sender": "' + sender + '", "receiver": "' +
                     receiver + '","content": "' + message + '" }', function (data) {
-                var field = text_box.replace('{description}', message);
+                var field = text_box.replace('{content}', message);
                 var today = new Date();
                 var time = today.getHours() + ":" + today.getMinutes()
                 field = field.replace('{time}', time)

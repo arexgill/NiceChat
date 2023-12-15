@@ -155,7 +155,7 @@ class MessageListView(View):
         data = JSONParser().parse(request)
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            # serializer.save()
 
             # Send a response message back to the sender
             response_message = "Your message was received successfully!"

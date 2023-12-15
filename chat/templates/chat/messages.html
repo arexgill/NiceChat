@@ -6,13 +6,13 @@
     {% if curr_user == message.sender %}
         <div class="container darker">
             <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="right" style="width:100%;">
-            <p>{{message.description}}</p>
+            <p>{{message.content}}</p>
             <span class="time-right">{{message.time}}</span>
         </div>
     {% else %}
         <div class="container">
             <img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">
-            <p>{{message.description}}</p>
+            <p>{{message.content}}</p>
             <span class="time-left">{{message.time}}</span>
         </div>
     {% endif %}
@@ -30,7 +30,7 @@ $(function () {
 
 const text = '<div class="container">'
             + '<img src="{% static 'images/user_image.jpg' %}" alt="Avatar" style="width:100%;">' +
-            '<p>{description}</p>' +
+            '<p>{msg}</p>' +
             '<span class="time-left">{time}</span>' +
             '</div>'
 
@@ -38,7 +38,7 @@ function receive(){
     $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
         if(data.length !== 0){
             for(var i = 0; i < data.length; i++){
-                var field = text.replace('{description}', data[i].description);
+                var field = text.replace('{msg}', data[i].content);
                 var time = data[i].time.slice(0, 5) + ' a.m'
                 field = field.replace('{time}', time);
                 $('#board').append(field);
