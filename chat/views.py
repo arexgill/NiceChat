@@ -10,7 +10,7 @@ from .models import UserProfile, Messages
 from django.views.generic import TemplateView
 from .utils import get_friends_list, get_user_id
 from .serializers import MessageSerializer, UserProfileSerializer
-from .services import MessageService
+from .services import AIReplyService
 from django.utils.decorators import method_decorator
 
 
@@ -155,18 +155,13 @@ class MessageListView(View):
         data = JSONParser().parse(request)
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
-            # serializer.save()
 
-            # Send a response message back to the sender
-            response_message = "Your message was received successfully!"
-            response_data = {'response_message': response_message}
-            # Use the service to create the original message and automatic response
-            original_message = MessageService.create_message_and_automatic_response(
+            AIReplyService.create_message_and_automatic_response(
                 sender=serializer.validated_data['sender'],
                 receiver=serializer.validated_data['receiver'],
                 content=serializer.validated_data['content'],
             )
-            return JsonResponse(response_data, status=201)
+            return JsonResponse({}, status=201)
 
         return JsonResponse(serializer.errors, status=400)
 
@@ -179,7 +174,7 @@ class MessageCreateView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         # Use the service to create the original message and automatic response
-        original_message = MessageService.create_message_and_automatic_response(
+        original_message = AIReplyService.create_message_and_automatic_response(
             sender=serializer.validated_data['sender'],
             receiver=serializer.validated_data['receiver'],
             content=serializer.validated_data['content'],
