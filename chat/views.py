@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserProfile, Messages
+from .models import UserProfile, Message
 from django.views.generic import TemplateView
 from .utils import get_friends_list, get_user_id
 from .serializers import MessageSerializer, UserProfileSerializer
@@ -118,7 +118,7 @@ class ChatView(APIView):
         friend = UserProfile.objects.get(username=username)
         id = self.get_user_id(request.user.username)
         curr_user = UserProfile.objects.get(id=id)
-        messages = Messages.objects.filter(sender=id, receiver=friend.id) | Messages.objects.filter(sender=friend.id, receiver=id)
+        messages = Message.objects.filter(sender=id, receiver=friend.id) | Message.objects.filter(sender=friend.id, receiver=id)
         friends = self.get_friends_list(id)
 
         return render(request, "chat/messages.html",
@@ -144,7 +144,7 @@ class ChatView(APIView):
 class MessageListView(View):
     def get(self, request, sender=None, receiver=None):
         if sender is not None and receiver is not None:
-            messages = Messages.objects.filter(sender=sender, receiver=receiver, seen=False)
+            messages = Message.objects.filter(sender=sender, receiver=receiver, seen=False)
             serializer = MessageSerializer(messages, many=True, context={"request": request})
             for message in messages:
                 message.seen = True

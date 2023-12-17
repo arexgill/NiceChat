@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Messages, UserProfile
+from .models import Message, UserProfile
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class MessageSerializer(serializers.ModelSerializer):
     receiver = serializers.SlugRelatedField(many=False, slug_field='username', queryset=UserProfile.objects.all())
 
     class Meta:
-        model = Messages
+        model = Message
         fields = ['sender', 'receiver', 'content', 'time']
 
 

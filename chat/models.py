@@ -8,13 +8,15 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=20, unique=True)
     avatar = models.ImageField(upload_to='images/', null=True)
     is_bot = models.BooleanField(default=False)
-    # llm_endpoint = models.URLField(null=True)
+    llm_endpoint = models.URLField(blank=True)
+    stock_answer = models.CharField(max_length=250, blank=True)
+
 
     def __str__(self):
         return f"{self.name}"
 
 
-class Messages(models.Model):
+class Message(models.Model):
 
     content = models.TextField()
     sender = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='sender')

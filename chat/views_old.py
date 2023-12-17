@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import UserProfile, Friends, Messages
+from .models import UserProfile, Friends, Message
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
@@ -118,7 +118,7 @@ def chat(request, username):
     friend = UserProfile.objects.get(username=username)
     id = getUserId(request.user.username)
     curr_user = UserProfile.objects.get(id=id)
-    messages = Messages.objects.filter(sender_name=id, receiver_name=friend.id) | Messages.objects.filter(sender_name=friend.id, receiver_name=id)
+    messages = Message.objects.filter(sender_name=id, receiver_name=friend.id) | Message.objects.filter(sender_name=friend.id, receiver_name=id)
 
     if request.method == "GET":
         friends = getFriendsList(id)
@@ -131,7 +131,7 @@ def chat(request, username):
 @csrf_exempt
 def message_list(request, sender=None, receiver=None):
     if request.method == 'GET':
-        messages = Messages.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
+        messages = Message.objects.filter(sender_name=sender, receiver_name=receiver, seen=False)
         serializer = MessageSerializer(messages, many=True, context={'request': request})
         for message in messages:
             message.seen = True

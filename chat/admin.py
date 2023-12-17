@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import UserProfile, Messages, Friends
+from .models import UserProfile, Message, Friends
 
 # Register your models here.
 admin.site.register(UserProfile)
-admin.site.register(Messages)
+admin.site.register(Message)
 admin.site.register(Friends)
