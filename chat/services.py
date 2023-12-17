@@ -1,13 +1,16 @@
 # chat/services.py
 import logging
-from .models import Message
+from .models import Message, UserProfile
 
 
 class AIReplyService:
     @staticmethod
     def fetch_response_from_llm(receiver):
-
-        return "Thank you for your message! This is an automatic response."
+        user = UserProfile.objects.get(id=receiver.id)
+        if user.stock_answer:
+            return user.stock_answer
+        else:
+            return "Thank you for your message! This is an automatic response."
 
     @staticmethod
     def create_message_and_automatic_response(sender, receiver, content):
