@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!--    <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>-->
+    <!--    <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>-->
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
     {% block head %}{% endblock %}
@@ -16,30 +16,36 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="sidenav">
-        <div class="row">
-            <a href="/"><div class="col"><h5 style="padding-left: 16px; display: block-content;">Hello {{user}}!</h5></div></a>
-        <div class="col"><div class="dropdown">
-            <button onclick="myFunction()" class="btn btn-success">Select Business</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="/search">Search</a>
-                <a href="/logout">Logout</a>
-              </div>
-        </div>
-        </div>
-        </div>
-        <hr class="mt-0 mb-4">
-        <div class="friends" style="y-overflow: auto">
-            <ul class="list-group">
-                {% for friend in friends %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidenav">
+            <div class="row">
+                <a href="/">
+                    <div class="col"><h5 style="padding-left: 16px; display: block-content;">Hello {{user}}!</h5></div>
+                </a>
+                <div class="col">
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="btn btn-success">Select Business</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="/search">Search</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-0 mb-4">
+            <div class="friends" style="y-overflow: auto">
+                <ul class="list-group">
+                    {% for friend in friends %}
                     <a href="/chat/{{friend.username}}">
                         <li class="list-group-item list-group-item-action">
                             <div class="row">
                                 <div class="col">
                                     {% if friend.avatar %}
-                                        <img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">
+                                    <img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">
                                     {% else %}
-                                        <img src="{% static 'images/default_avatar.jpg' %}" style="width: 50px; height: 50px;">
+                                    <img src="{% static 'images/default_avatar.jpg' %}"
+                                         style="width: 50px; height: 50px;">
                                     {% endif %}
                                 </div>
                                 <div class="col">
@@ -48,33 +54,65 @@
                             </div>
                         </li>
                     </a>
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
-    </div>
-
-    <div class="main">
-        {% block content %}
-        <div style="margin-top: 40vh; text-align: center">
-            <h2>Select a chat & start messaging!</h2>
+        <div class="col-md-8 main">
+            {% block content %}
+            <div style="margin-top: 40vh; text-align: center">
+                <h2>Please select a bot to communicate</h2>
+            </div>
+            {% endblock %}
         </div>
-        {% endblock %}
+
+        <!-- Right Sidebar for Current Bot Controls -->
+        <div class="sidebar-right">
+            <div class="current-bot-info">
+                <h3>{{ current_bot.name }}</h3>
+                <!-- Other bot details -->
+            </div>
+
+            <div class="bot-controls">
+                <label>Friendly: <input type="checkbox" class="toggle-switch"></label>
+                <label>Salesman: <input type="checkbox" class="toggle-switch"></label>
+            </div>
+
+            <button onclick="toggleAdvanced()">Advanced</button>
+            <div id="advancedControls" style="display:none;">
+                <label>Temperature: <input type="number" min="0" max="1" step="0.01"></label>
+                <label>Max Output Tokens: <input type="number" min="0" max="1024"></label>
+                <label>Top P: <input type="number" min="0" max="1" step="0.01"></label>
+                <label>Top K: <input type="number" min="0" max="100"></label>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+</script>
 
-    <script>
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
+<script>
+    function toggleAdvanced() {
+        var x = document.getElementById("advancedControls");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
