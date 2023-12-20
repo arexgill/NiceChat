@@ -13,6 +13,7 @@
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
     <link rel="stylesheet" href="{% static 'css/advanced.css' %}">
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
     {% block head %}{% endblock %}
 
     <title>{% block title %}{% endblock %}</title>
@@ -93,8 +94,6 @@
                     </label>
                 </div>
             </div>
-
-
             <div class="text-center mb-3">
                 <button onclick="toggleAdvanced()" class="btn btn-primary wide-button">
                     <i class="fas fa-sliders-h"></i> <!-- FontAwesome icon for advanced settings -->

@@ -3,59 +3,57 @@
 
 {% block message %}
 {% for message in messages %}
-    {% if curr_user == message.sender %}
-        <div class="container darker">
-            {% if user_profile.avatar %}
-                <img src="{% static user_profile.avatar %}" style="width: 50px; height: 50px;">
-            {% else %}
-                <img src="{% static 'images/default_avatar.jpeg' %}" style="width: 50px; height: 50px;">
-            {% endif %}
-            <p>{{message.content}}</p>
-            <span class="time-right">{{message.time}}</span>
+    <div class="message-container {% if curr_user != message.sender %} friend-message {% endif %}">
+        <!-- Message Text -->
+        <div class="message-text">
+            <div class="card card-text p-2 px-3 m-1">{{ message.content }}</div>
+            <div class="small time-left">{{ message.time }}</div>
         </div>
-    {% else %}
-        <div class="container">
-            {% if friend.avatar %}
-                <img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">
-            {% else %}
-                <img src="{% static 'images/default_avatar.jpeg' %}" style="width: 50px; height: 50px;">
-            {% endif %}
-            <p>{{message.content}}</p>
-            <span class="time-left">{{message.time}}</span>
+        <!-- Avatar -->
+        <div class="avatar">
+            <img src="{% static message.sender.avatar %}" alt="Avatar" class="rounded-circle">
         </div>
-    {% endif %}
+    </div>
 {% endfor %}
+
+
+
 <script>
-function scrolltoend() {
-    $('#board').stop().animate({
-        scrollTop: $('#board')[0].scrollHeight
-    }, 800);
-}
+    function scrolltoend() {
+        $('#board').stop().animate({
+            scrollTop: $('#board')[0].scrollHeight
+        }, 800);
+    }
 
-$(function () {
-    setInterval(receive, 1000)
-})
-
-const text = '<div class="container">'
-            + '<img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">' +
-            '<p>{msg}</p>' +
-            '<span class="time-left">{time}</span>' +
-            '</div>'
-
-function receive(){
-    $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
-        if(data.length !== 0){
-            for(var i = 0; i < data.length; i++){
-                var field = text.replace('{msg}', data[i].content);
-                var time = data[i].time.slice(0, 5) + ' a.m'
-                field = field.replace('{time}', time);
-                $('#board').append(field);
-                scrolltoend();
-            }
-        }
+    $(function () {
+        setInterval(receive, 1000)
     })
-}
 
+    const text = '<div class="d-flex align-items-center mb-4 message-container">' +
+             '<div class="avatar">' +
+             '<img src="{% static friend.avatar %}" class="rounded-circle" alt="Avatar">' +
+             '</div>' +
+             '<div class="message-text">' +
+             '<div class="card card-text p-2 px-3 m-1">{msg}</div>' +
+             '<div class="small time-left">{time}</div>' +
+             '</div>' +
+             '</div>';
+
+
+    function receive(){
+        $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
+            if(data.length !== 0){
+                for(var i = 0; i < data.length; i++){
+                    var field = text.replace('{msg}', data[i].content);
+                    var time = data[i].time.slice(0, 5) + ' a.m';
+                    field = field.replace('{time}', time);
+                    $('#board').append(field);
+                    scrolltoend();
+                }
+            }
+        })
+    }
 </script>
+
 
 {% endblock %}
