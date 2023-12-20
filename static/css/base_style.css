@@ -88,6 +88,24 @@
     z-index: 20;
 }
 
+.friend-item {
+    text-align: center; /* Center aligns the content */
+}
+
+.friend-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
+    object-fit: cover;
+    margin-bottom: 5px; /* Space between the avatar and name */
+}
+
+.friend-name {
+    font-size: 14px; /* Adjust the font size as needed */
+}
+
+
+
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}

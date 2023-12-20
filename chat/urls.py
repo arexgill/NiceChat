@@ -1,14 +1,3 @@
-# from django.urls import path, include
-# from . import views
-#
-# urlpatterns = [
-#     path("", views.index, name="index"),
-#     path("search/", views.search, name="search"),
-#     path("add-friend/<str:name>", views.addFriend, name="add-friend"),
-#     path("chat/<str:username>", views.chat, name="chat"),
-#     path('api/messages/<int:sender>/<int:receiver>', views.message_list, name='message-detail'),
-#     path('api/messages', views.message_list, name='message-list'),
-# ]
 
 from django.urls import path
 from chat.views import (
@@ -19,6 +8,7 @@ from chat.views import (
     MessageListView,
     IndexView,
     MessageCreateView,
+    ChatTemplateView,
 )
 
 urlpatterns = [
@@ -30,7 +20,6 @@ urlpatterns = [
     path('api/messages/<str:sender>/<str:receiver>/', MessageListView.as_view(), name='message-detail'),
     path('api/messages', MessageListView.as_view(), name='message-list'),
     path('api/messages/create/', MessageCreateView.as_view(), name='message-create'),
+    path('demo/', ChatTemplateView.as_view(), name='chat'),
 
 ]
-
-

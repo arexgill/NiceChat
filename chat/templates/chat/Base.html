@@ -16,59 +16,54 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 sidenav">
+        <div class="col-md-2">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h5>Hello {{user}}!</h5>
+                </div>
+            </div>
             <div class="row">
-                <a href="/">
-                    <div class="col"><h5 style="padding-left: 16px; display: block-content;">Hello {{user}}!</h5></div>
-                </a>
-                <div class="col">
+                <div class="col-12">
                     <div class="dropdown">
-                        <button onclick="myFunction()" class="btn btn-success">Select Business</button>
+                        <button onclick="myFunction()" class="btn btn-success">Select ChatBot</button>
                         <div id="myDropdown" class="dropdown-content">
-                            <a href="/search">Search</a>
+                            <a href="/search">Select</a>
                             <a href="/logout">Logout</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr class="mt-0 mb-4">
-            <div class="friends" style="y-overflow: auto">
+            <div class="friends" style="overflow-y: auto;">
                 <ul class="list-group">
                     {% for friend in friends %}
-                    <a href="/chat/{{friend.username}}">
-                        <li class="list-group-item list-group-item-action">
-                            <div class="row">
-                                <div class="col">
-                                    {% if friend.avatar %}
-                                    <img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">
-                                    {% else %}
-                                    <img src="{% static 'images/default_avatar.jpg' %}"
-                                         style="width: 50px; height: 50px;">
-                                    {% endif %}
-                                </div>
-                                <div class="col">
-                                    <div class="row" style="font-color: #000"><p>{{friend.name}}</p></div>
-                                </div>
+                    <a href="/chat/{{friend.username}}" class="list-group-item list-group-item-action">
+                        <div class="friend-item">
+                            <div class="friend-avatar">
+                                {% if friend.avatar %}
+                                <img src="{% static friend.avatar %}" alt="{{ friend.name }}">
+                                {% else %}
+                                <img src="{% static 'images/default_avatar.jpg' %}" alt="Default Avatar">
+                                {% endif %}
                             </div>
-                        </li>
+                            <div class="friend-name">{{ friend.name }}</div>
+                        </div>
                     </a>
                     {% endfor %}
                 </ul>
             </div>
-        </div>
 
-        <div class="col-md-8 main">
+        </div>
+        <div class="col-md-8">
             {% block content %}
             <div style="margin-top: 40vh; text-align: center">
                 <h2>Please select a bot to communicate</h2>
             </div>
             {% endblock %}
         </div>
-
-        <!-- Right Sidebar for Current Bot Controls -->
-        <div class="sidebar-right">
+        <div class="col-md-2 sidebar-right">
             <div class="current-bot-info">
                 <h3>{{ current_bot.name }}</h3>
                 <!-- Other bot details -->
@@ -89,6 +84,81 @@
         </div>
     </div>
 </div>
+
+
+<!--<div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-2 sidenav">-->
+<!--            <div class="row">-->
+<!--                <a href="/">-->
+<!--                    <div class="col"><h5 style="padding-left: 16px; display: block-content;">Hello {{user}}!</h5></div>-->
+<!--                </a>-->
+<!--                <div class="col">-->
+<!--                    <div class="dropdown">-->
+<!--                        <button onclick="myFunction()" class="btn btn-success">Select Business</button>-->
+<!--                        <div id="myDropdown" class="dropdown-content">-->
+<!--                            <a href="/search">Search</a>-->
+<!--                            <a href="/logout">Logout</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <hr class="mt-0 mb-4">-->
+<!--            <div class="friends" style="y-overflow: auto">-->
+<!--                <ul class="list-group">-->
+<!--                    {% for friend in friends %}-->
+<!--                    <a href="/chat/{{friend.username}}">-->
+<!--                        <li class="list-group-item list-group-item-action">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col">-->
+<!--                                    {% if friend.avatar %}-->
+<!--                                    <img src="{% static friend.avatar %}" style="width: 50px; height: 50px;">-->
+<!--                                    {% else %}-->
+<!--                                    <img src="{% static 'images/default_avatar.jpg' %}"-->
+<!--                                         style="width: 50px; height: 50px;">-->
+<!--                                    {% endif %}-->
+<!--                                </div>-->
+<!--                                <div class="col">-->
+<!--                                    <div class="row" style="font-color: #000"><p>{{friend.name}}</p></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                    </a>-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="col-md-8 main">-->
+<!--            {% block not_content %}-->
+<!--            <div style="margin-top: 40vh; text-align: center">-->
+<!--                <h2>Please select a bot to communicate</h2>-->
+<!--            </div>-->
+<!--            {% endblock %}-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Right Sidebar for Current Bot Controls &ndash;&gt;-->
+<!--        <div class="sidebar-right">-->
+<!--            <div class="current-bot-info">-->
+<!--                <h3>{{ current_bot.name }}</h3>-->
+<!--                &lt;!&ndash; Other bot details &ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <div class="bot-controls">-->
+<!--                <label>Friendly: <input type="checkbox" class="toggle-switch"></label>-->
+<!--                <label>Salesman: <input type="checkbox" class="toggle-switch"></label>-->
+<!--            </div>-->
+
+<!--            <button onclick="toggleAdvanced()">Advanced</button>-->
+<!--            <div id="advancedControls" style="display:none;">-->
+<!--                <label>Temperature: <input type="number" min="0" max="1" step="0.01"></label>-->
+<!--                <label>Max Output Tokens: <input type="number" min="0" max="1024"></label>-->
+<!--                <label>Top P: <input type="number" min="0" max="1" step="0.01"></label>-->
+<!--                <label>Top K: <input type="number" min="0" max="100"></label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

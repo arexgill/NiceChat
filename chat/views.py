@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -17,6 +16,17 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render
 from django.views import View
 from .models import UserProfile
+
+
+from django.views.generic import TemplateView
+
+
+class ChatTemplateView(TemplateView):
+    template_name = 'chat/chat_template.html'  # Path to your HTML template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class IndexView(View):

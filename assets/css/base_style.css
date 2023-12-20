@@ -88,6 +88,49 @@
     z-index: 20;
 }
 
+.sidebar-right {
+    padding: 10px;
+    border-left: 1px solid #ddd; /* Add a left border for separation */
+    background-color: #f9f9f9; /* Light background for the sidebar */
+    position: relative; /* Ensure the sidebar is positioned relative */
+    height: 100vh; /* Full height of the viewport */
+    overflow-y: auto; /* Allow scrolling inside the sidebar */
+}
+
+
+.current-bot-info h3 {
+    color: #337ab7; /* Bot name color */
+}
+
+.bot-controls label {
+    display: block; /* Each control on new line */
+    margin: 10px 0; /* Spacing between controls */
+}
+
+.toggle-switch {
+    cursor: pointer;
+}
+
+#advancedControls {
+    margin-top: 15px;
+    padding: 10px;
+    border-top: 1px solid #ddd; /* Separator line */
+}
+
+/* Styling for advanced controls inputs */
+#advancedControls label {
+    display: block; /* Each input on new line */
+    margin: 5px 0;
+}
+
+#advancedControls input[type=number] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Rounded corners */
+}
+
+
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
