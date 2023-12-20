@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="utf-8">
@@ -54,44 +55,65 @@
             {% endblock %}
         </div>
         <div class="col-md-2 sidebar-right">
-            <div class="row text-center">
-                <div class="col-12">
-                    <div class="dropdown">
-                        <button onclick="myFunction()" class="btn btn-success mb-2">Select ChatBot</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="/search">Select</a>
-                            <a href="/logout">Logout</a>
-                        </div>
-                    </div>
+
+            <!-- Dropdown Button -->
+            <div class="text-center mb-3">
+                <button onclick="myFunction()" class="btn btn-success mb-2 wide-button"><i class="fas fa-robot"></i>
+                </button>
+
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="/search">Select</a>
+                    <a href="/logout">Logout</a>
                 </div>
             </div>
-            <div class="row">
+
+            <!-- Current Bot Info -->
+            <div class="text-center mb-3">
                 <div class="current-bot-info">
                     <h3>{{ current_bot.name }}</h3>
-                    <!-- Other bot details -->
                 </div>
             </div>
-            <div class="row">
-                <div class="bot-controls">
-                    <label>Friendly: <input type="checkbox" class="toggle-switch"></label>
-                    <label>Salesman: <input type="checkbox" class="toggle-switch"></label>
+
+            <!-- Bot Controls -->
+            <div class="text-center mb-3 bot-controls">
+                <div class="d-flex justify-content-center align-items-center mb-2">
+                    <span style="margin-right: 10px;">  Friendly Bot  </span>
+                    <i class="fas fa-user-friends mr-2"></i> <!-- FontAwesome icon for Friendly -->
+                    <label class="switch">
+                        <input type="checkbox" class="toggle-switch">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <span style="margin-right: 10px;">  Salesman Bot  </span>
+                    <i class="fas fa-briefcase mr-2"></i> <!-- FontAwesome icon for Salesman -->
+                    <label class="switch">
+                        <input type="checkbox" class="toggle-switch">
+                        <span class="slider round"></span>
+                    </label>
                 </div>
             </div>
-            <button onclick="toggleAdvanced()" class="btn btn-info">Advanced</button>
+
+
+            <div class="text-center mb-3">
+                <button onclick="toggleAdvanced()" class="btn btn-primary wide-button">
+                    <i class="fas fa-sliders-h"></i> <!-- FontAwesome icon for advanced settings -->
+                </button>
+            </div>
             <div id="advancedControls" style="display:none;">
                 <div class="mb-3">
                     <label for="tempRange">Temperature:</label>
-                    <input type="range" id="tempRange" min="0.1" max="1" step="0.1">
+                    <input type="range" id="tempRange" min="0.1" max="1" step="0.1" value="0.8">
                     <span id="tempValue"></span>
                 </div>
                 <div class="mb-3">
                     <label for="maxTokensRange">Max Output Tokens:</label>
-                    <input type="range" id="maxTokensRange" min="1" max="1024">
-                    <span id="maxTokenValue"></span>
+                    <input type="range" id="maxTokensRange" min="1" max="1024" value="800">
+                    <span id="maxTokensValue"></span>
                 </div>
                 <div class="mb-3">
                     <label for="topPRange">Top P (0-1):</label>
-                    <input type="range" id="topPRange" min="0" max="1" step="0.01">
+                    <input type="range" id="topPRange" min="0" max="1" step="0.1">
                     <span id="topPValue"></span>
                 </div>
                 <div class="mb-3">

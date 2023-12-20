@@ -110,53 +110,7 @@
     background-color: #f9f9f9; /* Light background for the sidebar */
 }
 
-.current-bot-info h3 {
-    color: #337ab7; /* Bot name color */
-}
 
-.bot-controls label {
-    display: block; /* Each control on new line */
-    margin: 10px 0; /* Spacing between controls */
-}
-
-.toggle-switch {
-    cursor: pointer;
-}
-
-#advancedControls {
-    margin-top: 15px;
-    padding: 10px;
-    border-top: 1px solid #ddd; /* Separator line */
-}
-
-/* Styling for advanced controls inputs */
-#advancedControls label {
-    display: block; /* Each input on new line */
-    margin: 5px 0;
-}
-
-#advancedControls input[type=number] {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px; /* Rounded corners */
-}
-
-input[type=range] {
-    width: 100%; /* Full-width sliders */
-    /* Additional styling as needed */
-}
-
-#advancedControls label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#advancedControls span {
-    margin-left: 10px; /* Adjust as needed */
-    width: 50px; /* Adjust as needed */
-    text-align: center;
-}
 
 
 .dropdown a:hover {background-color: #ddd;}
