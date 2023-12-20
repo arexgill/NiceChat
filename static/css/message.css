@@ -4,9 +4,36 @@
     margin-bottom: 10px;
 }
 
+.message-pane {
+    max-height: 70vh; /* Adjust the height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    text-align: center;
+    margin-top: 5vh; /* Adjust margin to align it vertically */
+}
+.col-md-8 {
+    /* Ensures the column takes full width */
+    display: flex;
+    flex-direction: column;
+}
 .friend-message {
     flex-direction: row-reverse; /* Flips the order for friend messages */
 }
+
+.user-message .message-text {
+    border-top-right-radius: 0;
+    border-radius: 15px; /* Adjust as needed */
+}
+
+.friend-message .message-text {
+    border-top-left-radius: 0;
+    border-radius: 15px; /* Adjust as needed */
+}
+
+.avatar {
+    position: relative;
+    top: -5px; /* Adjust as needed */
+}
+
 
 .avatar img {
     width: 50px;
