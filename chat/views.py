@@ -141,33 +141,6 @@ class ChatView(APIView):
             'personalities': personalities  # Include personalities in the context
         })
 
-# class ChatView(APIView):
-#
-#     def get(self, request, username):
-#         friend = UserProfile.objects.get(username=username)
-#         id = self.get_user_id(request.user.username)
-#         curr_user = UserProfile.objects.get(id=id)
-#         messages = Message.objects.filter(sender=id, receiver=friend.id) | Message.objects.filter(sender=friend.id, receiver=id)
-#         friends = self.get_friends_list(id)
-#
-#         return render(request, "chat/messages.html",
-#                       {'messages': messages,
-#                        'friends': friends,
-#                        'curr_user': curr_user, 'friend': friend})
-#
-#     def get_user_id(self, username):
-#         use = UserProfile.objects.get(username=username)
-#         return use.id
-#
-#     def get_friends_list(self, user_id):
-#         try:
-#             user = UserProfile.objects.get(id=user_id)
-#             ids = list(user.friends_set.all())
-#             friends = [UserProfile.objects.get(id=int(str(id))) for id in ids]
-#             return friends
-#         except UserProfile.DoesNotExist:
-#             return []
-
 
 @method_decorator(csrf_exempt, name='dispatch')
 class MessageListView(View):

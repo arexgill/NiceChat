@@ -152,3 +152,40 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+.personalities-container {
+    /* Styles for the container */
+}
+
+.personality {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.personality-portrait {
+    width: 100px;  /* Width set to 100px */
+    height: auto;  /* Height will scale automatically */
+    border-radius: 50%; /* Circular portraits */
+    object-fit: cover; /* Ensures the image covers the area nicely */
+}
+
+.personality-avatar {
+    width: 50px;  /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+    border-radius: 50%; /* Circular avatars */
+}
+
+.personality-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.personality-name {
+    margin-left: 10px;
+}
+
+

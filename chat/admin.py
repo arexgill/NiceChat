@@ -68,8 +68,9 @@ class UserProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-            'name', 'email', 'username', 'avatar', 'is_bot', 'personalities', 'grounding_source', 'stock_answer',
-            'display_avatar_large')
+            'name', 'email', 'username', 'avatar', 'display_avatar_large',
+            'is_bot', 'personalities', 'grounding_source', 'stock_answer',
+            )
         }),
     )
 

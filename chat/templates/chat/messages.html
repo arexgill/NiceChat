@@ -11,7 +11,7 @@
         </div>
         <!-- Avatar -->
         <div class="avatar">
-            <img src="{% static message.sender.avatar %}" alt="Avatar" class="rounded-circle">
+            <img src="{{ message.sender.avatar.url }}" alt="Avatar" class="rounded-circle">
         </div>
     </div>
 {% endfor %}

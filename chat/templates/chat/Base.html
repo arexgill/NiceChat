@@ -56,11 +56,11 @@
             </div>
             {% endblock %}
         </div>
+        <!-- Right Sidebar -->
         <div class="col-md-2 sidebar-right">
 
-            <!-- Dropdown Button -->
             <div class="text-center mb-3">
-                <button onclick="myFunction()" class="btn btn-success mb-2 wide-button"><i class="fas fa-robot"></i>
+                <button onclick="SelectBot()" class="btn btn-success mb-2 wide-button"><i class="fas fa-robot"></i>
                 </button>
 
                 <div id="myDropdown" class="dropdown-content">
@@ -69,39 +69,30 @@
                 </div>
             </div>
 
-            <!-- Current Bot Info -->
-            <div class="text-center mb-3">
-                <div class="current-bot-info">
-                    <h3>{{ current_bot.name }}</h3>
+            <!-- Personalities Section -->
+            <div class="personalities-section">
+                <h4>Please choose your rep</h4>
+                <div class="personalities-container">
+                    {% for personality in personalities %}
+                    <div class="personality" data-personality-id="{{ personality.id }}">
+                        <img src="{{ personality.portrait.url }}" alt="{{ personality.name }}"
+                             class="personality-portrait">
+                        <div class="personality-info">
+                            <span class="personality-name">{{ personality.name }}</span>
+                            <label class="switch">
+                                <input type="checkbox" class="personality-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>This bot has no personalities assigned.</p>
+                    {% endfor %}
                 </div>
             </div>
 
-            <!-- Bot Controls -->
-            <!--            <div class="text-center mb-3 bot-controls">-->
-            <!--                <div class="d-flex justify-content-center align-items-center mb-2">-->
-            <!--                    <span style="margin-right: 10px;">  Friendly Bot  </span>-->
-            <!--                    <i class="fas fa-user-friends mr-2"></i> &lt;!&ndash; FontAwesome icon for Friendly &ndash;&gt;-->
-            <!--                    <label class="switch">-->
-            <!--                        <input type="checkbox" class="toggle-switch">-->
-            <!--                        <span class="slider round"></span>-->
-            <!--                    </label>-->
-            <!--                </div>-->
-            <!--                <div class="d-flex justify-content-center align-items-center">-->
-            <!--                    <span style="margin-right: 10px;">  Salesman Bot  </span>-->
-            <!--                    <i class="fas fa-briefcase mr-2"></i> &lt;!&ndash; FontAwesome icon for Salesman &ndash;&gt;-->
-            <!--                    <label class="switch">-->
-            <!--                        <input type="checkbox" class="toggle-switch">-->
-            <!--                        <span class="slider round"></span>-->
-            <!--                    </label>-->
-            <!--                </div>-->
-            <!--            </div>-->
+
             <!-- Advanced Section -->
-            <div class="advanced-section">
-                <h3>Available Personalities</h3>
-                <ul id="personalities-list">
-                    <!-- Personalities will be listed here -->
-                </ul>
-            </div>
             <div class="text-center mb-3">
                 <button onclick="toggleAdvanced()" class="btn btn-primary wide-button">
                     <i class="fas fa-sliders-h"></i> <!-- FontAwesome icon for advanced settings -->
@@ -130,6 +121,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -142,7 +134,28 @@
 
 <script>
 
-    function myFunction() {
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const personalities = document.querySelectorAll('.personality-toggle');
+        personalities.forEach(function(toggle) {
+            toggle.addEventListener('change', function() {
+                if(this.checked) {
+                    // Uncheck all other toggles
+                    personalities.forEach(function(otherToggle) {
+                        if(otherToggle !== toggle) {
+                            otherToggle.checked = false;
+                        }
+                    });
+
+                    // TODO: Perform action for selected personality
+                    const selectedPersonalityId = this.closest('.personality').getAttribute('data-personality-id');
+                    console.log('Selected Personality ID:', selectedPersonalityId);
+                }
+            });
+        });
+    });
+
+    function SelectBot() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
 
