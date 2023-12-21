@@ -8,7 +8,7 @@ class AIReplyService:
         user = UserProfile.objects.get(id=receiver.id)
         if user.is_bot:
             c = Convo()
-            return c.predict(content).text
+            return c.predict(content, user.stock_answer)
         else:
             return "This is an automated response. Please set up the LLM to converse"
 

@@ -28,12 +28,18 @@ class Convo:
         else:
             self._context = []
 
-    def predict(self, prompt: str):
-        response = self._model.predict(
-            '\n'.join(self._context + [prompt]),
-            **self._parameters,
-        )
-        return response
+    def predict(self, prompt: str, grounding=''):
+        try:
+            gs = vertexai.language_models._language_models.VertexAISearch(grounding, 'global')
+            response = self._model.predict(
+                '\n'.join(self._context + [prompt]), grounding_source = gs,
+                **self._parameters,
+            )
+        except Exception as e:
+            err = f"Bot couldn't retrieve an answer: {e}"
+            print(err)
+            return err
+        return response.text
 
     def converse(self, prompt: str):
         self._requests.append(prompt)
