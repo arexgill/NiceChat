@@ -160,32 +160,25 @@ input:checked + .slider:before {
 
 .personality {
     display: flex;
-    align-items: center;
+    flex-direction: column;  /* Stack items vertically */
+    align-items: center;  /* Center items horizontally */
     margin-bottom: 10px;
 }
 
 .personality-portrait {
-    width: 100px;  /* Width set to 100px */
-    height: auto;  /* Height will scale automatically */
-    border-radius: 50%; /* Circular portraits */
-    object-fit: cover; /* Ensures the image covers the area nicely */
-}
-
-.personality-avatar {
-    width: 50px;  /* Adjust as needed */
-    height: 50px; /* Adjust as needed */
-    border-radius: 50%; /* Circular avatars */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;  /* Space between image and name */
 }
 
 .personality-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    text-align: center;  /* Center the name and switch */
 }
 
 .personality-name {
-    margin-left: 10px;
+    margin-bottom: 5px;  /* Space between name and switch */
 }
 
 

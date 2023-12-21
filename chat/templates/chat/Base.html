@@ -71,14 +71,15 @@
 
             <!-- Personalities Section -->
             <div class="personalities-section">
-                <h4>Please choose your rep</h4>
+                <h3>Bot Personalities</h3>
                 <div class="personalities-container">
                     {% for personality in personalities %}
                     <div class="personality" data-personality-id="{{ personality.id }}">
                         <img src="{{ personality.portrait.url }}" alt="{{ personality.name }}"
                              class="personality-portrait">
                         <div class="personality-info">
-                            <span class="personality-name">{{ personality.name }}</span>
+                            <div class="personality-name">{{ personality.name }}</div>
+                            <!-- Personality name below the portrait -->
                             <label class="switch">
                                 <input type="checkbox" class="personality-toggle">
                                 <span class="slider round"></span>
