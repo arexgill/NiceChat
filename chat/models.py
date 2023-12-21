@@ -8,9 +8,24 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=20, unique=True)
     avatar = models.ImageField(upload_to='images/', null=True)
     is_bot = models.BooleanField(default=False)
-    llm_endpoint = models.URLField(blank=True)
+    grounding_source = models.CharField(max_length=250, blank=True)
     stock_answer = models.CharField(max_length=250, blank=True)
 
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class BotPersonality(models.Model):
+
+    name = models.CharField(max_length=25)
+    personality_type = models.CharField(max_length=250)
+    portrait = models.ImageField(upload_to='images/', null=True)
+    avatar = models.ImageField(upload_to='images/', null=True)
+    predict_prefix = models.CharField(max_length=2048, blank=True)
+
+    class Meta:
+        verbose_name_plural = "bot personalities"
 
     def __str__(self):
         return f"{self.name}"
@@ -36,6 +51,10 @@ class Friends(models.Model):
 
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     friend = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = "friends"
+
 
     def __str__(self):
         return f"{self.friend}"

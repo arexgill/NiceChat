@@ -58,18 +58,11 @@
     margin-left: auto; /* Aligns time to the right */
 }
 
-.send-message-area {
+.message-input-container {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Adjust as needed */
-    padding: 10px; /* Adds some space */
+    padding: 10px; /* Space inside the container */
 }
 
-.message-input {
-    flex-grow: 1; /* Makes input grow to fill space */
-    margin-right: 10px; /* Adds space between input and button */
-}
 
-.send-button {
-    /* Additional styling as needed */
-}
