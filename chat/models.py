@@ -10,6 +10,8 @@ class UserProfile(models.Model):
     is_bot = models.BooleanField(default=False)
     grounding_source = models.CharField(max_length=250, blank=True)
     stock_answer = models.CharField(max_length=250, blank=True)
+    personalities = models.ManyToManyField('BotPersonality', related_name='users', blank=True)
+
 
 
     def __str__(self):
@@ -19,9 +21,9 @@ class UserProfile(models.Model):
 class BotPersonality(models.Model):
 
     name = models.CharField(max_length=25)
-    personality_type = models.CharField(max_length=250)
-    portrait = models.ImageField(upload_to='images/', null=True)
-    avatar = models.ImageField(upload_to='images/', null=True)
+    personality_type = models.CharField(max_length=250, blank=True)
+    portrait = models.ImageField(upload_to='images/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='images/', null=True, blank=True)
     predict_prefix = models.CharField(max_length=2048, blank=True)
 
     class Meta:
