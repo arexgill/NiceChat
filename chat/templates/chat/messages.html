@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block message %}
+
+<div id="load-all-messages" style="text-align: center; cursor: pointer;">
+    <span>•••</span>
+</div>
+
 <div class="message-pane" id="board"> <!-- Ensure this is the container for your messages -->
     {% for message in messages %}
     <div class="message-container {% if curr_user != message.sender %} friend-message {% endif %}">
@@ -19,6 +24,29 @@
 </div>
 
 <script>
+
+
+    document.getElementById('load-all-messages').addEventListener('click', function() {
+        // AJAX request to fetch all messages
+        $.get('/api/all_messages/' + sender_id + '/' + receiver_id, function(data) {
+            // Clear the current messages
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+
+            // Add all messages to the board
+            data.forEach(function(message) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('message-container');
+                // Populate msgDiv with message content, similar to how it's done in your current setup
+                // ...
+                board.appendChild(msgDiv);
+            });
+
+            // Scroll to the end of the message pane
+            board.scrollTop = board.scrollHeight;
+        });
+    });
+
     function scrolltoend() {
         $('#board').stop().animate({
             scrollTop: $('#board')[0].scrollHeight
@@ -31,7 +59,7 @@
 
     const text = '<div class="d-flex align-items-center mb-4 message-container justify-content-end user-message">' +
              '<div class="avatar">' +
-             '<img src="{% static friend.avatar %}" class="rounded-circle" alt="Avatar">' +
+             '<img src="{{ friend.avatar.url }}" class="rounded-circle" alt="Avatar">' +
              '</div>' +
              '<div class="message-text">' +
              '<div class="card card-text p-2 px-3 m-1">{msg}</div>' +

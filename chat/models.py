@@ -24,9 +24,17 @@ class BotPersonality(models.Model):
     avatar = models.ImageField(upload_to='images/', null=True, blank=True)
     predict_prefix = models.CharField(max_length=2048, blank=True)
 
+    # Bot personality profile
+    prompt_instruction = models.TextField(blank=True, help_text="Instructions for crafting prompts for this personality.")
+    prompt_examples = models.TextField(blank=True, help_text="Examples of effective prompts for this personality.")
+    prompt_output_details = models.TextField(blank=True, help_text="Details on what the output should look like for this personality.")
+    context_length = models.IntegerField(default=2048,
+                                         help_text="The number of characters of conversation history to consider for each prompt.")
+    tone = models.CharField(max_length=250, blank=True, help_text="The desired tone for this personality's responses.")
+    keywords = models.TextField(blank=True, help_text="Key topics or words associated with this personality.")
+
     class Meta:
         verbose_name_plural = "bot personalities"
-
 
     def __str__(self):
         return f"{self.name}"

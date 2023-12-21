@@ -1,35 +1,85 @@
-from django.contrib import admin
 from django.utils.html import format_html
+from django.contrib import admin
+from django.db import models
+from django.forms import Textarea
 from .models import UserProfile, Message, Friends, BotPersonality
-from .forms import BotPersonalityForm, UserProfileForm
+from .forms import UserProfileForm
 
 
+# class BotPersonalityAdmin(admin.ModelAdmin):
+#     form = BotPersonalityForm
+#     list_display = ('display_avatar_small', 'name', 'personality_type')
+#     readonly_fields = ('display_avatar_large', 'display_portrait_large')
+#
+#     def display_avatar_small(self, obj):
+#         return self.display_image(obj.avatar, small=True)
+#     display_avatar_small.short_description = "Bot Avatar"
+#
+#     def display_avatar_large(self, obj):
+#         return self.display_image(obj.avatar)
+#     display_avatar_large.short_description = "Avatar"
+#
+#     def display_portrait_large(self, obj):
+#         return self.display_image(obj.portrait)
+#     display_portrait_large.short_description = "Portrait"
+#
+#     def display_image(self, image_field, small=False):
+#         if image_field:
+#             size = '50px' if small else '150px'
+#             return format_html('<img src="{}" style="width: {}; height: auto;"/>', image_field.url, size)
+#         return "No Image"
+#
+#     fieldsets = (
+#         (None, {
+#             'fields': ('name', 'personality_type', 'avatar', 'display_avatar_large', 'portrait', 'display_portrait_large', 'predict_prefix')
+#         }),
+#     )
+
+
+
+@admin.register(BotPersonality)
 class BotPersonalityAdmin(admin.ModelAdmin):
-    form = BotPersonalityForm
-    list_display = ('display_avatar_small', 'name', 'personality_type')
-    readonly_fields = ('display_avatar_large', 'display_portrait_large')
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},  # Makes text areas larger
+    }
 
-    def display_avatar_small(self, obj):
-        return self.display_image(obj.avatar, small=True)
-    display_avatar_small.short_description = "Bot Avatar"
+    list_display = ('name', 'personality_type', 'display_portrait', 'display_avatar')  # Customize as needed
+    list_filter = ('personality_type',)
 
-    def display_avatar_large(self, obj):
-        return self.display_image(obj.avatar)
-    display_avatar_large.short_description = "Avatar"
+    def portrait_image(self, obj):
+        return format_html('<img src="{}" style="width: 150px; height: auto;"/>', obj.portrait.url) if obj.portrait else "No Image"
 
-    def display_portrait_large(self, obj):
-        return self.display_image(obj.portrait)
-    display_portrait_large.short_description = "Portrait"
+    def avatar_image(self, obj):
+        return format_html('<img src="{}" style="width: 150px; height: auto;"/>', obj.avatar.url) if obj.avatar else "No Image"
 
-    def display_image(self, image_field, small=False):
-        if image_field:
-            size = '50px' if small else '150px'
-            return format_html('<img src="{}" style="width: {}; height: auto;"/>', image_field.url, size)
-        return "No Image"
+    def display_portrait(self, obj):
+        if obj.portrait:
+            return format_html('<img src="{}" style="width: 50px; height: auto;"/>', obj.portrait.url)
+        return "No Portrait"
 
+    display_portrait.short_description = 'Portrait'
+
+    def display_avatar(self, obj):
+        if obj.avatar:
+            return format_html('<img src="{}" style="width: 50px; height: auto;"/>', obj.avatar.url)
+        return "No Avatar"
+
+    display_avatar.short_description = 'Avatar'
+
+    readonly_fields = ['portrait_image', 'avatar_image']
     fieldsets = (
         (None, {
-            'fields': ('name', 'personality_type', 'avatar', 'display_avatar_large', 'portrait', 'display_portrait_large', 'predict_prefix')
+            'fields': (('name', 'personality_type'),
+                       ('portrait', 'portrait_image'),
+                       ('avatar', 'avatar_image')),
+        }),
+        ('Personality Profile', {
+            'fields': ('predict_prefix', 'prompt_instruction', 'prompt_examples', 'prompt_output_details'),
+            'description': "Detailed settings for how this personality should construct and interpret prompts."
+        }),
+        ('Advanced Settings', {
+            'fields': ('context_length', 'tone', 'keywords'),
+            'description': "Fine-tune how this personality behaves in conversation."
         }),
     )
 
@@ -87,5 +137,5 @@ admin.site.site_title = 'Nice Chat'
 
 admin.site.register(Message)
 admin.site.register(Friends)
-admin.site.register(BotPersonality, BotPersonalityAdmin)
+# admin.site.register(BotPersonality, BotPersonalityAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
