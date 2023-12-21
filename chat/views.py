@@ -5,8 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserProfile, Message
-from django.views.generic import TemplateView
+from .models import Message, BotPersonality
 from .utils import get_friends_list, get_user_id
 from .serializers import MessageSerializer, UserProfileSerializer
 from .services import AIReplyService
@@ -157,15 +156,41 @@ class MessageListView(View):
         data = JSONParser().parse(request)
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
+            # Extract the personality_id from the request data
+            personality_id = data.get('personality_id')
 
+            # Optionally, fetch the BotPersonality object (if personality_id is provided)
+            personality = None
+            if personality_id:
+                try:
+                    personality = BotPersonality.objects.get(pk=personality_id)
+                except BotPersonality.DoesNotExist:
+                    return JsonResponse({'error': 'Personality not found'}, status=400)
+
+            # Create the message and automatic response using the provided personality
             AIReplyService.create_message_and_automatic_response(
                 sender=serializer.validated_data['sender'],
                 receiver=serializer.validated_data['receiver'],
                 content=serializer.validated_data['content'],
+                personality=personality.predict_prefix  # Pass the BotPersonality object to the service
             )
             return JsonResponse({}, status=201)
 
         return JsonResponse(serializer.errors, status=400)
+
+    # def post(self, request, sender=None, receiver=None):
+    #     data = JSONParser().parse(request)
+    #     serializer = MessageSerializer(data=data)
+    #     if serializer.is_valid():
+    #
+    #         AIReplyService.create_message_and_automatic_response(
+    #             sender=serializer.validated_data['sender'],
+    #             receiver=serializer.validated_data['receiver'],
+    #             content=serializer.validated_data['content'],
+    #         )
+    #         return JsonResponse({}, status=201)
+    #
+    #     return JsonResponse(serializer.errors, status=400)
 
 
 class MessageCreateView(generics.CreateAPIView):

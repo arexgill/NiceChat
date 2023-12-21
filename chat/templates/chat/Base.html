@@ -55,7 +55,10 @@
                 <!-- Messages will be here -->
             </div>
             {% endblock %}
+
         </div>
+        {% block sidebar %}
+        {% endblock %}
         <!-- Right Sidebar -->
         <div class="col-md-2 sidebar-right">
 
@@ -135,26 +138,6 @@
 
 <script>
 
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const personalities = document.querySelectorAll('.personality-toggle');
-        personalities.forEach(function(toggle) {
-            toggle.addEventListener('change', function() {
-                if(this.checked) {
-                    // Uncheck all other toggles
-                    personalities.forEach(function(otherToggle) {
-                        if(otherToggle !== toggle) {
-                            otherToggle.checked = false;
-                        }
-                    });
-
-                    // TODO: Perform action for selected personality
-                    const selectedPersonalityId = this.closest('.personality').getAttribute('data-personality-id');
-                    console.log('Selected Personality ID:', selectedPersonalityId);
-                }
-            });
-        });
-    });
 
     function SelectBot() {
         document.getElementById("myDropdown").classList.toggle("show");

@@ -17,7 +17,8 @@
             <div class="input-group-prepend">
                 <input type="text" placeholder="Send a message..." name="message" id="msg_field">
                 <button type="submit" name="send" class="btn btn-success send-button" id="send_btn"><i
-                        class="fas fa-paper-plane"></i> Send</button>
+                        class="fas fa-paper-plane"></i> Send
+                </button>
             </div>
         </div>
     </form>
@@ -47,6 +48,32 @@
                      '</div>' +
                      '</div>';
 
+    // Select personality
+    let selectedPersonalityId = null; // Global variable to hold the selected personality ID
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Event listener for changes on personality toggles
+        document.querySelectorAll('.personality-toggle').forEach(function(toggle) {
+            toggle.addEventListener('change', function() {
+                if(this.checked) {
+                    // Update the selected personality ID
+                    selectedPersonalityId = this.closest('.personality').getAttribute('data-personality-id');
+
+                    // Uncheck all other toggles
+                    document.querySelectorAll('.personality-toggle').forEach(function(otherToggle) {
+                        if(otherToggle !== toggle) {
+                            otherToggle.checked = false;
+                        }
+                    });
+                } else if (selectedPersonalityId === this.closest('.personality').getAttribute('data-personality-id')) {
+                    // If the currently selected personality is deselected, clear the selection
+                    selectedPersonalityId = null;
+                }
+            });
+        });
+    });
+
+
 
     // For sending messages
     $(function () {
@@ -59,8 +86,15 @@
     })
 
     function send(sender, receiver, message){
-        $.post('/api/messages', '{"sender": "' + sender + '", "receiver": "' +
-                receiver + '","content": "' + message + '" }', function (data) {
+        // Prepare the data to send, including the selected personality ID
+        const dataToSend = {
+            sender: sender,
+            receiver: receiver,
+            content: message,
+            personality_id: selectedPersonalityId  // Include the selected personality ID
+        };
+
+        $.post('/api/messages', JSON.stringify(dataToSend), function (data) {
             var field = text_box.replace('{content}', message);
             var today = new Date();
             var time = today.getHours() + ":" + today.getMinutes();

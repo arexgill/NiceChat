@@ -35,7 +35,7 @@ class BotPersonalityAdmin(admin.ModelAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'username', 'display_avatar_small')
+    list_display = ('display_avatar_small', 'name', 'email', 'username')
     readonly_fields = ('display_avatar_large',)
     form = UserProfileForm
 
@@ -73,6 +73,16 @@ class UserProfileAdmin(admin.ModelAdmin):
             )
         }),
     )
+
+
+# Sets the text that appears at the top of each admin page.
+admin.site.site_header = 'Nice Chat Administration'
+
+# Sets the text that appears at the top of the admin index page.
+admin.site.index_title = 'Site Administration'
+
+# Sets the text that appears in the browser title bar.
+admin.site.site_title = 'Nice Chat'
 
 
 admin.site.register(Message)
