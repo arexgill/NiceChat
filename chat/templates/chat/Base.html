@@ -56,7 +56,6 @@
             </div>
             {% endblock %}
         </div>
-
         <div class="col-md-2 sidebar-right">
 
             <!-- Dropdown Button -->
@@ -78,23 +77,30 @@
             </div>
 
             <!-- Bot Controls -->
-            <div class="text-center mb-3 bot-controls">
-                <div class="d-flex justify-content-center align-items-center mb-2">
-                    <span style="margin-right: 10px;">  Friendly Bot  </span>
-                    <i class="fas fa-user-friends mr-2"></i> <!-- FontAwesome icon for Friendly -->
-                    <label class="switch">
-                        <input type="checkbox" class="toggle-switch">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="d-flex justify-content-center align-items-center">
-                    <span style="margin-right: 10px;">  Salesman Bot  </span>
-                    <i class="fas fa-briefcase mr-2"></i> <!-- FontAwesome icon for Salesman -->
-                    <label class="switch">
-                        <input type="checkbox" class="toggle-switch">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+            <!--            <div class="text-center mb-3 bot-controls">-->
+            <!--                <div class="d-flex justify-content-center align-items-center mb-2">-->
+            <!--                    <span style="margin-right: 10px;">  Friendly Bot  </span>-->
+            <!--                    <i class="fas fa-user-friends mr-2"></i> &lt;!&ndash; FontAwesome icon for Friendly &ndash;&gt;-->
+            <!--                    <label class="switch">-->
+            <!--                        <input type="checkbox" class="toggle-switch">-->
+            <!--                        <span class="slider round"></span>-->
+            <!--                    </label>-->
+            <!--                </div>-->
+            <!--                <div class="d-flex justify-content-center align-items-center">-->
+            <!--                    <span style="margin-right: 10px;">  Salesman Bot  </span>-->
+            <!--                    <i class="fas fa-briefcase mr-2"></i> &lt;!&ndash; FontAwesome icon for Salesman &ndash;&gt;-->
+            <!--                    <label class="switch">-->
+            <!--                        <input type="checkbox" class="toggle-switch">-->
+            <!--                        <span class="slider round"></span>-->
+            <!--                    </label>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!-- Advanced Section -->
+            <div class="advanced-section">
+                <h3>Available Personalities</h3>
+                <ul id="personalities-list">
+                    <!-- Personalities will be listed here -->
+                </ul>
             </div>
             <div class="text-center mb-3">
                 <button onclick="toggleAdvanced()" class="btn btn-primary wide-button">
@@ -139,9 +145,7 @@
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
-</script>
 
-<script>
     function toggleAdvanced() {
         var x = document.getElementById("advancedControls");
         if (x.style.display === "none") {
