@@ -12,8 +12,6 @@ class UserProfile(models.Model):
     stock_answer = models.CharField(max_length=250, blank=True)
     personalities = models.ManyToManyField('BotPersonality', related_name='users', blank=True)
 
-
-
     def __str__(self):
         return f"{self.name}"
 
@@ -28,6 +26,7 @@ class BotPersonality(models.Model):
 
     class Meta:
         verbose_name_plural = "bot personalities"
+
 
     def __str__(self):
         return f"{self.name}"
