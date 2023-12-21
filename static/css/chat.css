@@ -49,10 +49,32 @@
     overflow-y: auto;
 }
 
-#msg_field{
-    margin-left: 24px;
-    margin-top: 16px;
-    width: 1000px;
+#msg_field {
+    margin-left: 24px; /* Retain left margin for spacing */
+    margin-top: 16px; /* Retain top margin for spacing */
+    width: calc(100% - 48px); /* Make width responsive, adjust 48px if needed */
+    max-width: 1000px; /* Maximum width */
+    padding: 8px 12px; /* Add some internal padding for better text visibility */
+    border: 1px solid #add8e6; /* Subtle light blue border */
+    border-radius: 4px; /* Slightly rounded corners */
+    box-sizing: border-box; /* Include padding and border in the width */
+    background-color: #f0f8ff; /* Very light blue background */
+    color: #5f9ea0; /* Darker blue text for contrast */
+}
+
+.wide-button {
+    padding: 8px 16px; /* Ample padding for a larger button */
+    color: white; /* White text color for contrast */
+    background-color: #5f9ea0; /* A shade of light blue, adjust as needed */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Slightly rounded corners for a modern look */
+    cursor: pointer; /* Change cursor to pointer when hovering over the button */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.wide-button:hover {
+    background-color: #add8e6; /* Lighter blue on hover, adjust as needed */
 }
 
 #send_btn{

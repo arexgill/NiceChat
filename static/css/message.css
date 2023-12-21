@@ -5,11 +5,11 @@
 }
 
 .message-pane {
-    max-height: 70vh; /* Adjust the height as needed */
-    overflow-y: auto; /* Enables vertical scrolling */
-    text-align: center;
-    margin-top: 5vh; /* Adjust margin to align it vertically */
+    max-height: 80vh; /* Adjust as needed */
+    overflow-y: auto; /* Adds vertical scroll */
+    padding: 10px; /* Optional: Adds some space inside the pane */
 }
+
 .col-md-8 {
     /* Ensures the column takes full width */
     display: flex;
@@ -56,4 +56,20 @@
 
 .message-time {
     margin-left: auto; /* Aligns time to the right */
+}
+
+.send-message-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust as needed */
+    padding: 10px; /* Adds some space */
+}
+
+.message-input {
+    flex-grow: 1; /* Makes input grow to fill space */
+    margin-right: 10px; /* Adds space between input and button */
+}
+
+.send-button {
+    /* Additional styling as needed */
 }
