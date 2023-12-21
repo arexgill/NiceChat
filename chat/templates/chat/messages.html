@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block message %}
-{% for message in messages %}
+<div class="message-pane" id="board"> <!-- Ensure this is the container for your messages -->
+    {% for message in messages %}
     <div class="message-container {% if curr_user != message.sender %} friend-message {% endif %}">
         <!-- Message Text -->
         <div class="message-text">
@@ -14,9 +15,8 @@
             <img src="{{ message.sender.avatar.url }}" alt="Avatar" class="rounded-circle">
         </div>
     </div>
-{% endfor %}
-
-
+    {% endfor %}
+</div>
 
 <script>
     function scrolltoend() {

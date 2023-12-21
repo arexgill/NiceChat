@@ -10,15 +10,12 @@ from .utils import get_friends_list, get_user_id
 from .serializers import MessageSerializer, UserProfileSerializer
 from .services import AIReplyService
 from django.utils.decorators import method_decorator
-
-
 from django.shortcuts import render
 from django.views import View
 from .models import UserProfile
-
-
 from django.views.generic import TemplateView
 
+DEFAULT_PERSONALITY_ID = 1
 
 class ChatTemplateView(TemplateView):
     template_name = 'chat/chat_template.html'  # Path to your HTML template
@@ -157,7 +154,7 @@ class MessageListView(View):
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
             # Extract the personality_id from the request data
-            personality_id = data.get('personality_id')
+            personality_id = data['personality_id'] if data['personality_id'] is not None else DEFAULT_PERSONALITY_ID
 
             # Optionally, fetch the BotPersonality object (if personality_id is provided)
             personality = None
@@ -177,20 +174,6 @@ class MessageListView(View):
             return JsonResponse({}, status=201)
 
         return JsonResponse(serializer.errors, status=400)
-
-    # def post(self, request, sender=None, receiver=None):
-    #     data = JSONParser().parse(request)
-    #     serializer = MessageSerializer(data=data)
-    #     if serializer.is_valid():
-    #
-    #         AIReplyService.create_message_and_automatic_response(
-    #             sender=serializer.validated_data['sender'],
-    #             receiver=serializer.validated_data['receiver'],
-    #             content=serializer.validated_data['content'],
-    #         )
-    #         return JsonResponse({}, status=201)
-    #
-    #     return JsonResponse(serializer.errors, status=400)
 
 
 class MessageCreateView(generics.CreateAPIView):

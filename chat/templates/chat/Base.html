@@ -34,11 +34,8 @@
                     <a href="/chat/{{friend.username}}" class="list-group-item list-group-item-action">
                         <div class="friend-item">
                             <div class="friend-avatar">
-                                {% if friend.avatar %}
-                                <img src="{% static friend.avatar %}" alt="{{ friend.name }}">
-                                {% else %}
-                                <img src="{% static 'images/default_avatar.jpg' %}" alt="Default Avatar">
-                                {% endif %}
+                                <img src="{{ friend.avatar.url }}" alt="{{ friend.name }}">
+
                             </div>
                             <div class="friend-name">{{ friend.name }}</div>
                         </div>
