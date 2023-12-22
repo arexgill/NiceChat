@@ -30,7 +30,7 @@ class AllMessagesView(APIView):
     def get(self, request, sender_id, receiver_id):
         messages = Message.objects.filter(sender=sender_id, receiver=receiver_id) | \
                    Message.objects.filter(sender=receiver_id, receiver=sender_id)
-        messages = messages.order_by('-id')  # Assuming you want the newest first
+        # messages = messages.order_by('-id')  # Assuming you want the newest first
         messages_data = [
             {
                 'id': message.id,
@@ -144,7 +144,7 @@ class ChatView(APIView):
         curr_user = UserProfile.objects.get(id=curr_user_id)
         messages = (Message.objects.filter(sender=curr_user_id, receiver=friend.id) |
                     Message.objects.filter(sender=friend.id, receiver=curr_user_id))
-        recent_messages = messages.order_by('-id')[:20]
+        recent_messages = messages[:20]
         friends = get_friends_list(curr_user_id)
 
         # If the friend is a bot, get its personalities

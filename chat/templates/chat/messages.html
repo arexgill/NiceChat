@@ -7,17 +7,15 @@
     <span>•••</span>
 </div>
 
-<div class="message-pane" id="board"> <!-- Ensure this is the container for your messages -->
+<div class="message-pane" id="board">
     {% for message in messages %}
     <div class="message-container {% if curr_user != message.sender %} friend-message {% endif %}">
-        <!-- Message Text -->
-        <div class="message-text">
-            <div class="card card-text p-2 px-3 m-1">{{ message.content }}</div>
-            <div class="small time-left">{{ message.time }}</div>
-        </div>
-        <!-- Avatar -->
-        <div class="avatar">
+        <div class="message-avatar">
             <img src="{{ message.sender.avatar.url }}" alt="Avatar" class="rounded-circle">
+        </div>
+        <div class="message-text">
+            <p>{{ message.content }}</p>
+            <span class="time-stamp">{{ message.time }}</span>
         </div>
     </div>
     {% endfor %}

@@ -1,13 +1,40 @@
+.message-pane {
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: #f9f9f9; /* Light grey background */
+    padding: 10px;
+}
+
 .message-container {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    background-color: #fff; /* White background for bubbles */
+    border-radius: 18px; /* Rounded corners for bubbles */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.message-pane {
-    max-height: 80vh; /* Adjust as needed */
-    overflow-y: auto; /* Adds vertical scroll */
-    padding: 10px; /* Optional: Adds some space inside the pane */
+.friend-message .message-text {
+    order: -1;
+}
+
+.message-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Circular avatars */
+    margin: 10px;
+}
+
+.message-text {
+    max-width: 70%;
+    padding: 8px 12px;
+    color: #333; /* Dark text for readability */
+}
+
+.time-stamp {
+    font-size: 12px;
+    color: #888; /* Grey color for timestamps */
+    display: block; /* New line for timestamp */
 }
 
 .col-md-8 {
@@ -21,11 +48,6 @@
 
 .user-message .message-text {
     border-top-right-radius: 0;
-    border-radius: 15px; /* Adjust as needed */
-}
-
-.friend-message .message-text {
-    border-top-left-radius: 0;
     border-radius: 15px; /* Adjust as needed */
 }
 

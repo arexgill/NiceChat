@@ -10,16 +10,16 @@
     {% block message %}
     {% endblock %}
 </div>
-<div class="message-pane">
+
+<!-- Input Area for sending messages -->
+<div class="input-area">
     <form method="post" class="form-group" id="chat-box">
         {% csrf_token %}
         <div class="input-group">
-            <div class="input-group-prepend">
-                <input type="text" placeholder="Send a message..." name="message" id="msg_field">
-                <button type="submit" name="send" class="btn btn-success send-button" id="send_btn"><i
-                        class="fas fa-paper-plane"></i> Send
-                </button>
-            </div>
+            <input type="text" placeholder="Send a message..." name="message" id="msg_field" class="form-control">
+            <button type="submit" name="send" class="btn btn-success send-button" id="send_btn">
+                <i class="fas fa-paper-plane"></i> Send
+            </button>
         </div>
     </form>
 </div>
