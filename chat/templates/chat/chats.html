@@ -9,21 +9,21 @@
 <div class="messages" id="board">
     {% block message %}
     {% endblock %}
-</div>
 
-<!-- Input Area for sending messages -->
-<div class="input-area">
-    <form method="post" class="form-group" id="chat-box">
-        {% csrf_token %}
-        <div class="input-group">
-            <input type="text" placeholder="Send a message..." name="message" id="msg_field" class="form-control">
-            <button type="submit" name="send" class="btn btn-success send-button" id="send_btn">
-                <i class="fas fa-paper-plane"></i> Send
-            </button>
-        </div>
-    </form>
-</div>
+    <!-- Input Area for sending messages -->
+    <div class="input-area">
+        <form method="post" class="form-group" id="chat-box">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" placeholder="Send a message..." name="message" id="msg_field" class="form-control">
+                <button type="submit" name="send" class="btn btn-success send-button" id="send_btn">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+        </form>
+    </div>
 
+</div>
 <script>
     const messageBody = document.querySelector('.messages');
     messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;

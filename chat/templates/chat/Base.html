@@ -54,8 +54,6 @@
             {% endblock %}
 
         </div>
-        {% block sidebar %}
-        {% endblock %}
         <!-- Right Sidebar -->
         <div class="col-md-2 sidebar-right">
 
@@ -76,7 +74,7 @@
                     {% for personality in personalities %}
                     <div class="personality" data-personality-id="{{ personality.id }}">
                         <img src="{{ personality.portrait.url }}" alt="{{ personality.name }}"
-                             class="personality-portrait">
+                             class="personality-portrait gradient-edge">
                         <div class="personality-info">
                             <div class="personality-name">{{ personality.name }}</div>
                             <!-- Personality name below the portrait -->

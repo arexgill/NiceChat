@@ -6,37 +6,6 @@ from .models import UserProfile, Message, Friends, BotPersonality
 from .forms import UserProfileForm
 
 
-# class BotPersonalityAdmin(admin.ModelAdmin):
-#     form = BotPersonalityForm
-#     list_display = ('display_avatar_small', 'name', 'personality_type')
-#     readonly_fields = ('display_avatar_large', 'display_portrait_large')
-#
-#     def display_avatar_small(self, obj):
-#         return self.display_image(obj.avatar, small=True)
-#     display_avatar_small.short_description = "Bot Avatar"
-#
-#     def display_avatar_large(self, obj):
-#         return self.display_image(obj.avatar)
-#     display_avatar_large.short_description = "Avatar"
-#
-#     def display_portrait_large(self, obj):
-#         return self.display_image(obj.portrait)
-#     display_portrait_large.short_description = "Portrait"
-#
-#     def display_image(self, image_field, small=False):
-#         if image_field:
-#             size = '50px' if small else '150px'
-#             return format_html('<img src="{}" style="width: {}; height: auto;"/>', image_field.url, size)
-#         return "No Image"
-#
-#     fieldsets = (
-#         (None, {
-#             'fields': ('name', 'personality_type', 'avatar', 'display_avatar_large', 'portrait', 'display_portrait_large', 'predict_prefix')
-#         }),
-#     )
-
-
-
 @admin.register(BotPersonality)
 class BotPersonalityAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -47,10 +16,12 @@ class BotPersonalityAdmin(admin.ModelAdmin):
     list_filter = ('personality_type',)
 
     def portrait_image(self, obj):
-        return format_html('<img src="{}" style="width: 150px; height: auto;"/>', obj.portrait.url) if obj.portrait else "No Image"
+        return format_html('<img src="{}" style="width: 150px; height: auto;"/>',
+                           obj.portrait.url) if obj.portrait else "No Image"
 
     def avatar_image(self, obj):
-        return format_html('<img src="{}" style="width: 150px; height: auto;"/>', obj.avatar.url) if obj.avatar else "No Image"
+        return format_html('<img src="{}" style="width: 150px; height: auto;"/>',
+                           obj.avatar.url) if obj.avatar else "No Image"
 
     def display_portrait(self, obj):
         if obj.portrait:
@@ -84,10 +55,12 @@ class BotPersonalityAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('display_avatar_small', 'name', 'email', 'username')
     readonly_fields = ('display_avatar_large',)
     form = UserProfileForm
+    filter_horizontal = ('personalities',)  # This adds the filter interface for personalities
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -118,8 +91,8 @@ class UserProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-            'name', 'email', 'username', 'avatar', 'display_avatar_large',
-            'is_bot', 'personalities', 'grounding_source', 'stock_answer',
+                'name', 'email', 'username', 'avatar', 'display_avatar_large',
+                'is_bot', 'personalities', 'grounding_source', 'stock_answer',
             )
         }),
     )
@@ -134,8 +107,5 @@ admin.site.index_title = 'Site Administration'
 # Sets the text that appears in the browser title bar.
 admin.site.site_title = 'Nice Chat'
 
-
 admin.site.register(Message)
 admin.site.register(Friends)
-# admin.site.register(BotPersonality, BotPersonalityAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)

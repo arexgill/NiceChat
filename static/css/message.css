@@ -1,34 +1,55 @@
 .message-pane {
     max-height: 80vh;
     overflow-y: auto;
-    background-color: #f9f9f9; /* Light grey background */
+    background-color: #f9f9f9;  /* Light grey background */
     padding: 10px;
 }
 
 .message-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;  /* Align items to the start */
     margin-bottom: 15px;
-    background-color: #fff; /* White background for bubbles */
-    border-radius: 18px; /* Rounded corners for bubbles */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #fff;  /* White background for bubbles */
+    border-radius: 18px;  /* Rounded corners for bubbles */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
 }
 
-.friend-message .message-text {
-    order: -1;
+.friend-message {
+    flex-direction: row-reverse; /* Flips the order for friend messages */
+}
+
+.user-message .message-text, .friend-message .message-text {
+    border-radius: 15px;
+}
+
+.message-avatar {
+    min-width: 60px;  /* Ensure avatars have enough space */
+    display: flex;
+    align-items: flex-start;  /* Align avatars to the top */
+}
+
+.message-time {
+    margin-left: auto;  /* Aligns time to the right */
+}
+
+.message-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .message-avatar img {
     width: 40px;
     height: 40px;
-    border-radius: 50%; /* Circular avatars */
+    border-radius: 50%;
     margin: 10px;
 }
 
 .message-text {
     max-width: 70%;
     padding: 8px 12px;
-    color: #333; /* Dark text for readability */
+    color: #333;
 }
 
 .time-stamp {
@@ -42,20 +63,11 @@
     display: flex;
     flex-direction: column;
 }
-.friend-message {
-    flex-direction: row-reverse; /* Flips the order for friend messages */
-}
-
-.user-message .message-text {
-    border-top-right-radius: 0;
-    border-radius: 15px; /* Adjust as needed */
-}
 
 .avatar {
     position: relative;
     top: -5px; /* Adjust as needed */
 }
-
 
 .avatar img {
     width: 50px;
@@ -64,27 +76,5 @@
     object-fit: cover;
 }
 
-.message-text {
-    flex-grow: 1;
-    /* Additional styling as needed */
-}
-
-.message-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.message-time {
-    margin-left: auto; /* Aligns time to the right */
-}
-
-.message-input-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Adjust as needed */
-    padding: 10px; /* Space inside the container */
-}
 
 

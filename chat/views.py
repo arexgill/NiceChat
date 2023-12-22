@@ -190,7 +190,7 @@ class MessageListView(View):
                 sender=serializer.validated_data['sender'],
                 receiver=serializer.validated_data['receiver'],
                 content=serializer.validated_data['content'],
-                personality=personality.predict_prefix  # Pass the BotPersonality object to the service
+                personality=personality  # Pass the BotPersonality object to the service
             )
             return JsonResponse({}, status=201)
 
